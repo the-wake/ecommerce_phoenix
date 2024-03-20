@@ -4,6 +4,8 @@ defmodule Ecommerce.ShoppingCart.Cart do
 
   schema "carts" do
     field :user_uuid, Ecto.UUID
+    # Added to tie the cart to its items.
+    has_many :items, Ecommerce.ShoppingCart.CartItem
 
     timestamps(type: :utc_datetime)
   end
