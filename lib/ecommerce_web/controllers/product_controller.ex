@@ -26,10 +26,22 @@ defmodule EcommerceWeb.ProductController do
     end
   end
 
+  # Default version of function.
+  # def show(conn, %{"id" => id}) do
+  #   product = Catalog.get_product!(id)
+  #   render(conn, :show, product: product)
+  # end
+
+  # New version of function, updated to encapsulate the product queried and send it as an argument to the inc_page_views/1 function. We pipe the value into get product, and pipe that into inc_page_views.
   def show(conn, %{"id" => id}) do
-    product = Catalog.get_product!(id)
+    product =
+      id
+      |> Catalog.get_product!()
+      |> Catalog.inc_page_views()
+
     render(conn, :show, product: product)
   end
+
 
   def edit(conn, %{"id" => id}) do
     product = Catalog.get_product!(id)
